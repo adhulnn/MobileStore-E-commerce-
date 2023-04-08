@@ -1,0 +1,91 @@
+{% extends 'navc.html' %}
+{% block nav %}
+{% load static %}
+
+<style>
+    .card {
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 2rem;
+}
+
+.scrollable-details {
+  overflow-y: auto;
+}
+
+.card-img {
+  width: 100%;
+  height: auto;
+}
+.container.ll{
+    padding-top: 40px;
+}
+
+
+</style>
+
+<!-- <h1 class="bg-light">Details</h1>       -->
+        <div class="container ll ">
+            <div class="card">
+                <div class="row no-gutters">
+                    <div class="col-md-7">
+                        {% if mobile.photo %}
+                          <img src="{{mobile.photo.url}}" class="card-img" alt="Your Image">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-5 scrollable-details">
+                      <div class="card-body">
+                        <div class="card-body">
+                          <div class="card-title" >
+                            <h1 class="text-uppercase">{{ mobile.brand }}</h1>
+                            <h5>{{ mobile.model }}</h5>
+                            <p>Average rating: {% if avg_rating %}<strong>{{ avg_rating }}</strong>{% else %}No ratings yet.{% endif %}</p>
+                          </div>
+                          <div class="card-text mb-3" style="font-size: 1.3em;">
+                            <p class="h3 text-success font-weight-bold mb-1"><i class="bi bi-currency-rupee"></i>{{ mobile.price }}</p>
+                            <p class="text-muted mb-2">{{ mobile.specs }}</p>
+                            <p class="text-muted mb-0"><small>Release date: {{ mobile.datetime }}</small></p>
+                          </div>
+                        </div>
+                        
+                        <form method="post">
+                          {% csrf_token %}
+                          <div class="container text-center">
+                            <button type="submit" class="btn btn-info col-12">Add to Cart</button>
+                          </div>
+                        </form>
+                        <div class="container" id="rev">
+                          <h3 class="mt-3 mb-3">Reviews</h3>
+                          {% if reviews %}
+                          <!-- <p>Average rating: {% if avg_rating %}<strong>{{ avg_rating }}</strong>{% else %}No ratings yet.{% endif %}</p> -->
+                            <ul class="list-unstyled">
+                              {% for review in reviews %}
+                                <li class="media mb-4">
+                                  <img class="mr-3 rounded-lg" height="45px" src="{{review.user.image.url}}" alt="Avatar">
+                                  <div class="media-body">
+                                    <h5 class="mt-0 mb-1">{{ review.user.first_name }} {{ review.user.last_name }}</h5>
+                                    <p class="mb-0"><small><b> Rating: {{ review.rating }}</b></small></p>
+                                    <p class="mb-0">{{ review.comment }}</p>
+                                    <p class="text-muted mb-0"><small>Created at: {{ review.createdat }}</small></p>
+                                  </div>
+                                </li>
+                              {% endfor %}
+                            </ul>
+                          {% else %}
+                            <p class="text-muted">No reviews yet.</p>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                    
+                  
+                </div>
+              </div>
+              
+        </div>
+          
+    
+{% endblock %}

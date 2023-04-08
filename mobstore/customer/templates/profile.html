@@ -1,0 +1,104 @@
+{% extends 'navc.html' %}
+{% block nav %}
+
+<style>
+    body{
+      background: beige;
+    }
+    .container.pc {
+        margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content:center;
+    }
+    .card {
+      /* margin-bottom: 20px;
+      margin-top: 20px; */
+      background-color: rgb(255, 255, 255) ;
+      min-width: 150px;
+      border-radius: 2px;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,.08);
+    }
+    .abc {
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.08);
+}
+
+    .dwf {
+    margin-top: 16px;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.08);
+}
+    </style>
+    
+
+<!-- <h1 class="text-center">Profile</h1> -->
+{% if messages %}
+      {% for i in messages %}
+            {% if i.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  {{i}}
+            </div>
+            {%endif%}
+            {% if i.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="alert alert-danger alert-dismissible">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  {{i}}
+            </div>
+            {%endif%}
+      {%endfor%}
+    {%endif%}
+    <div class="container pc">
+        
+      
+      <div class="row">
+            <div class="col-4">
+                    <div class="abc">
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="{{request.user.image.url}}" class="card-img" height="100%" width="100%" alt="Your Image">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <p class="card-text">Hello,</p>
+                                    <h4 class="card-title">{{request.user.first_name}} {{request.user.last_name}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dwf">
+                        <div class="row no-gutters">
+                            
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-text">Reviews & Ratings</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="col-8">
+                  <div class="card" style="width: 100%;">
+                        <div class="card-body">
+                          <h5 class="card-title">Personal Information</h5>
+                          <p class="card-text">{{request.user.bio_user.status}}</p>
+                          <p class="card-text">{{request.user.bio_user.dob}}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item"><strong>Phone: </strong> {{request.user.phone}}</li>
+                          <li class="list-group-item"><strong>Email: </strong>{{request.user.email}}</li>
+                          <li class="list-group-item"><strong>Address: </strong>{{request.user.address}}</li>
+                        </ul>
+                      </div>
+            </div>
+            
+      </div>
+
+
+    
+</div>
+{%endblock%}

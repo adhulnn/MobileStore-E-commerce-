@@ -1,0 +1,54 @@
+{% extends 'navc.html' %}
+{% block nav %}
+{% load static %}
+
+<style>
+body{
+  background: beige;
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:center;
+}
+.card:hover {
+  transform: translateY(-5px);
+}
+.card {
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  background-color: rgb(243, 243, 243) ;
+  background-color: #fff;
+  border-radius: 2px;
+  transition: transform 0.2s ease-in-out;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.08);
+}
+.card:hover {
+  text-decoration: none;
+}
+</style>
+
+<div class="card-container">
+  {% for i in data %}
+    <a href="{% url 'md' i.pk %}" class="card" style="width: 30%;">
+      {% if i.photo %}
+        <img class="card-img-top" src="{{i.photo.url}}" alt="Card image cap">
+      {% else %}
+        <p>No photo for this Mobile instance.</p>
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{i.brand}}</h5>
+        <p class="card-text">{{i.model}}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong>{{i.price}}</strong></li>
+        <li class="list-group-item">{{i.specs}}</li>
+        <li class="list-group-item">{{i.datetime}}</li>
+      </ul>
+    </a>
+  {% endfor %}
+</div>
+
+{% endblock %}

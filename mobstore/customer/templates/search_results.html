@@ -1,0 +1,42 @@
+{% extends 'navc.html' %}
+
+{% block nav %}
+
+
+
+<div class="container">
+  <div class="row">
+    {% if results %}
+    <div class="col-md-12">
+      <h2 class="text-center">Search Results:</h2>
+      <hr>
+      {% for mobile in results %}
+      <div class="card mb-3">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            {% if mobile.photo %}
+            <img src="{{ mobile.photo.url }}" class="card-img" alt="{{ mobile.brand }} {{ mobile.model }} photo">
+            
+            {% endif %}
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h3 class="card-title">{{ mobile.brand }} {{ mobile.model }}</h3>
+              <p class="card-text"><strong>Price:</strong> {{ mobile.price }}</p>
+              <p class="card-text"><strong>Specs:</strong> {{ mobile.specs }}</p>
+              <a href="{% url 'md' mobile.id %}" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="col-md-12">
+      <h2 class="text-center">No results found.</h2>
+      <hr>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

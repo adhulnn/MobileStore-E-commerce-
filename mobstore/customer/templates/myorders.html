@@ -1,0 +1,132 @@
+{% extends 'navc.html' %}
+{% load mathfilters %}
+
+{% block nav %}
+<style>
+  .axion p{
+    font-weight:lighter;
+    font-size: 40px;
+    margin-top: 25PX;
+
+  }
+  .axion a{
+    font-weight:lighter;
+    font-size: 28px;
+    margin-top: 25PX;
+    text-decoration: none;
+  }
+</style>
+<div class="container my-5">
+    <!-- <h1 class="mb-4 text-center">My Orders</h1> -->
+
+    {% if orders %}
+    <ul class="list-group">
+        {% for order in orders %}
+        <li class="list-group-item mb-5">
+            <h2 class="mb-3">Order Id : {{ order.id }}</h2>
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h5 class="mb-3"><strong>Shipping Address:</strong></h5>
+                    <p class="mb-1">{{ order.first_name }} {{ order.last_name }}</p>
+                    <p class="mb-1">{{ order.address }}</p>
+                    <p class="mb-1">{{ order.city }}, {{ order.state }} {{ order.zip_code }}</p>
+                </div>
+
+                <div class="col-md-6">
+                    <h5 class="mb-3"><strong>Payment Method:</strong></h5>
+                    <p class="mb-0">{{ order.payment_method }}</p>
+                </div>
+            </div>
+
+            <h5 class="mb-3"><strong>Products:</strong></h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for mobile in order.mobile.all %}
+                        <tr>
+                            <td><img src="{{ mobile.photo.url }}" class="img-fluid" width="100"></td>
+                            <td>{{ mobile.brand }} {{ mobile.model }}</td>
+                            <td>{{ mobile.price|floatformat:2 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="mt-4"><strong>Order Date:</strong> {{ order.created_at|date:"F j, Y" }}</p>
+            <div class="row">
+                <!-- Cancel Order Button -->
+                <form action="{% url 'delete_order' order.id %}" method="POST" class="">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger  mr-3 ml-3"><i class="bi bi-x-octagon"></i> Cancel Order</button>
+                </form>
+
+                
+
+                <!-- Review Product Button -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reviewModal{{ order.id }}"><i class="bi bi-chat-right-dots"></i> Review Product</button>
+
+                <!-- Review Modal -->
+                <div class="modal fade" id="reviewModal{{ order.id }}" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="reviewModalLabel">Review Mobiles</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {% for mobile in order.mobile.all %}
+                                <form method="POST" action="{% url 'review_product' mobile.id %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <!-- <label for="id_mobile">Review for </label> -->
+                                        <!-- <select id="id_mobile" name="mobile_id"> -->
+                                           
+                                                <p value="{{ mobile.id }}"><strong> Review for {{ mobile.brand }} {{ mobile.model }}</strong></p>
+                                            
+                                        <!-- </select> -->
+                                    </div>
+                                    <table class="table">
+                                        {{ cform.as_table }}
+                                    </table>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary col-12">Submit</button>
+                                    </div>
+                                    <hr>
+                                </form>
+                                {% endfor %}
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                
+      
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div class="text-center axion">
+      <p class="lead">You haven't placed any orders yet.</p>
+      <a href="{% url 'chm'  %}">find something intresting!</a>
+    </div>
+    {% endif %}
+</div>
+
+  
+{% endblock %}
+

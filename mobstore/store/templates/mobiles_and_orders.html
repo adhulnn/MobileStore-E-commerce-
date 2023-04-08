@@ -1,0 +1,104 @@
+{% extends 'navbar.html' %}
+
+{% block content %}
+<div class="container">
+    
+  
+    <div class="row mt-5">
+      {% for mobile in mobiles %}
+        {% if mobile.order_set.exists %}
+          <div class="col-md-4">
+            <div class="card mb-5">
+              <div class="card-body">
+                <h2 class="card-title">{{ mobile.brand }} {{ mobile.model }}</h2>
+                <p class="card-text"><strong>Price:</strong> {{ mobile.price }}</p>
+                <p class="card-text"> {{ mobile.datetime }}</p>
+                
+                <img src="{{ mobile.photo.url }}" alt="{{ mobile.brand }} {{ mobile.model }}" class="card-img-top mb-3" >
+                <p class="card-text"><strong>Specs:</strong> {{ mobile.specs }}</p>
+                {% if mobile.order_set.exists %}
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ordersModal{{ mobile.id }}">View Orders</button>
+                {% else %}
+                <p class="card-text">No orders yet.</p>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="modal fade" id="ordersModal{{ mobile.id }}" tabindex="-1" role="dialog" aria-labelledby="ordersModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="ordersModalLabel">Orders for {{ mobile.brand }} {{ mobile.model }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    {% if mobile.order_set.exists %}
+                    {% for order in mobile.order_set.all %}
+                    <div class="order mb-4">
+                      <h3 class="mb-3">Order ID: {{ order.id }}</h3>
+                      <p><strong>Customer Name:</strong> {{ order.first_name }} {{ order.last_name }}</p>
+                      <p><strong>Email:</strong> {{ order.email }}</p>
+                      <p><strong>Address:</strong> {{ order.address }}, {{ order.city }}, {{ order.state }} {{ order.zip_code }}</p>
+                      <p><strong>Payment Method:</strong> {{ order.payment_method }}</p>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p>No orders yet.</p>
+                    {% endif %}
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  
+  </div>
+
+<style>
+  
+  /* Custom CSS for the page */
+  body {
+    background-color: #f8f9fa;
+  }
+  
+
+  .card {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    width: 21rem;
+    height: 39rem;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .order {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fff;
+  }
+
+  .modal-content {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Add media query for small screens */
+  @media (max-width: 768px) {
+    .card {
+      width: 100%;
+      margin-right: 0;
+    }
+  }
+
+
+</style>
+
+{% endblock %}

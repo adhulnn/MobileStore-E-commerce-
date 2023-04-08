@@ -1,0 +1,81 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+      .logout-btn {
+        background-color: transparent;
+        border: none;
+        color: #dc3545;
+        font-size: 18px;
+        font-weight: bold;
+        margin-left: 10px;
+        cursor: pointer;
+      }
+
+      .logout-btn:hover {
+        color: #fff;
+      }
+
+      .logout-icon {
+        vertical-align: middle;
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!-- <a class="navbar-brand" href="#">MobileStore</a> -->
+        <a class="navbar-brand" href="{% url 'sh' %}"><img src="{% static 'images\smlogo.png' %}" height="30px">Mobile Store</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'ad' %}">Add</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'pro' %}">Profile</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'mobiles_and_orders'  %}">Orders</a>
+            </li>
+            
+            
+          </ul>
+          <form class="form-inline my-2 my-lg-0" action="{% url 'search_resultss' %}" method="get">
+            <input type="text" id="q" name="q" value="{{ request.GET.q }}" class="form-control " placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0 ml-2" type="submit"><i class="fa fa-search"></i></button>
+ 
+            <div >
+              <a class="nav-link text-danger font-weight-bold px-3" style="font-size: 18px;" href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Logout</a>
+            </div>
+          </form>
+        </div>
+      </nav> 
+      {% block content %} 
+      
+      {% endblock %} 
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

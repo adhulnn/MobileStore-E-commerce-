@@ -1,0 +1,49 @@
+{% extends 'navbar.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+    body{
+        background-color:bisque;
+    }
+    .container{
+        padding-left: 20px;
+        padding-bottom: 20px;
+        padding-right: 20px;
+        padding-top: 20px;
+    }
+
+</style>
+
+<h1 class="bg-danger">Confirm delete!</h1>      
+        <div class="container">
+            <div class="card">
+                <div class="row no-gutters">
+                <div class="col-md-6">
+                    {% if object.photo %}
+                    <img src="{{mobile.photo.url}}" class="card-img" alt="Your Image">
+                    {%endif%}
+                </div>
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <h5 class="card-title">Are you sure want to delete this?</h5>
+                        <h5 class="card-title">{{mobile.brand}}</h5>
+                        <p class="card-text">{{mobile.model}}.</p>
+                        <p class="card-text">{{mobile.price}}.</p>
+                        <p class="card-text">{{mobile.datetime}}.</p>
+                    </div>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="container text-center">
+                            <button class="col-10 btn btn-danger">Confirm</button>
+                            <a href="{% url 'sh' %}" class="btn btn-danger"><i class="bi bi-x-lg"></i></i></a>
+                        </div>
+                    </form>
+                </div>
+                </div>
+            </div>
+        </div>
+          
+    
+{% endblock %}
+

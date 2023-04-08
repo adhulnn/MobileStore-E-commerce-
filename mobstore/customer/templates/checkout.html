@@ -1,0 +1,100 @@
+{% extends 'navc.html' %}
+{% block nav %}
+<style>
+    .checkout {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+.checkout h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.checkout label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.checkout input[type="text"],
+.checkout input[type="email"],
+.checkout textarea {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+.checkout select {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+.checkout button[type="submit"] {
+  display: block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.checkout button[type="submit"]:hover {
+  background-color: #0069d9;
+}
+</style>
+  <div class="checkout">
+    <h2>Checkout</h2>
+    <form method="post">
+  {% csrf_token %}
+  <div>
+    {{ form.first_name.label_tag }}
+    {{ form.first_name }}
+  </div>
+  <div>
+    {{ form.last_name.label_tag }}
+    {{ form.last_name }}
+  </div>
+  <div>
+    {{ form.email.label_tag }}
+    {{ form.email }}
+  </div>
+  <div>
+    {{ form.address.label_tag }}
+    {{ form.address }}
+  </div>
+  <div>
+    {{ form.city.label_tag }}
+    {{ form.city }}
+  </div>
+  <div>
+    {{ form.state.label_tag }}
+    {{ form.state }}
+  </div>
+  <div>
+    {{ form.zip_code.label_tag }}
+    {{ form.zip_code }}
+  </div>
+  <div>
+    {{ form.payment_method.label_tag }}
+    {{ form.payment_method }}
+  </div>
+  <button type="submit">Place Order</button>
+</form>
+
+    <button type="button" class="btn btn-secondary mt-3" onclick="history.back()">Back</button>
+  </div>
+{% endblock %}

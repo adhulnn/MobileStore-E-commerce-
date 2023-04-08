@@ -1,0 +1,192 @@
+{% extends 'navc.html' %}
+{% block nav %}
+{% load mathfilters %}
+<style>
+  .product-img {
+    width: 100%;
+    max-width: 150px;
+    margin-left: -20px;
+  }
+  /* body {
+    background-color: #f5f5f5;
+  } */
+
+  h1 {
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+  }
+
+  .quantity {
+    display: flex;
+    align-items: center;
+    
+  }
+
+  .quantity .inp {
+    width: 50px;
+    margin-right: 10px;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    margin-bottom: 3.6rem;
+    margin-top: 3rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .actions a {
+    margin-top: 3rem;
+    margin-bottom: 3.7rem;
+
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .actions a:hover {
+    background-color: #c82333;
+  }
+
+  form .btn.a1 {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  form .btn.a2 {
+    /* background-color: #007bff; */
+    color: #0069d9;
+    border: 4px;
+    border-style:outset;
+    
+    border-color: #0069d9;
+    /* padding: 0.5rem 1rem; */
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+  }
+
+  form .btn.a2:hover {
+    background-color: #ffffff;
+  }
+
+
+  form .btn.a1:hover {
+    background-color: #0069d9;
+  }
+
+  .empty-cart {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-top: 3rem;
+  }
+  p{
+    font-weight:lighter;
+    font-size: 40px;
+    margin-top: 40PX;
+
+  }
+  .axel a{
+    font-weight:lighter;
+    font-size: 25px;
+    margin-top: 25PX;
+    text-decoration: none;
+
+  }
+  .noul a{
+    color: #000000;
+    text-decoration: none;
+    
+  }
+</style>
+
+{% if cart_items %}
+
+  <table>
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Image</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart_items %}
+        <tr>
+          <td class="noul"><a href="{% url 'md' item.product.pk %}" >{{ item.product.brand }} {{ item.product.model }}</a></td>
+          <td><img src="{{ item.product.photo.url }}" alt="Product image" class="product-img"></td>
+          <td class="quantity">
+            <form method="post" action="{% url 'upcrt' item.pk %}">
+              {% csrf_token %}
+              <input type="number" class="inp" name="quantity" value="{{ item.quantity }}" min="1">
+              <button type="submit" class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+              </svg></button>
+            </form>
+          </td>
+          <td>{{ item.product.price }}</td>
+          <td>{{ item.quantity|mul:item.product.price }}</td>
+          <td class="actions">
+            <a href="{% url 'removecrt' item.pk %}"><i class="bi bi-trash3"></i></i></a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <form method="post" action="">
+    {% csrf_token %}
+    <div class="text-center">
+      <a href="{% url 'checkout' %}" type="submit" class="btn a1">Checkout</a>
+      <a href="{% url 'chm' %}" class="btn btn-outline-info a2">Continue Shopping</a>
+    </div>
+  </form>
+{% else %}
+  <div class="text-center axel">
+    <p>Your cart is empty...... <a href="{% url 'chm' %}" >find something!</a></p>
+    
+  </div>
+{% endif %}
+
+
+
+{% endblock %}

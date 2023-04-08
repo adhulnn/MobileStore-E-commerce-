@@ -1,0 +1,53 @@
+{% extends 'navbar.html' %}
+{% block content %}
+{% load static %}
+
+<style>
+body{
+  background: beige;
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:center;
+}
+.card {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  /* background-color: burlywood ; */
+}
+
+</style>
+
+<h1 class="bg-warning">Home - store!></h1>
+
+    
+<div class="card-container">
+  {% for i in data %}
+    <div class="card" style="width: 28%;">
+      {% if i.photo %}
+        <img class="card-img-top" src="{{i.photo.url}}" alt="Card image cap">
+        {% else %}
+        <p>No photo for this Mobile instance.</p>
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{i.brand}}</h5>
+        <p class="card-text">{{i.model}}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{i.price}}</li>
+        <li class="list-group-item">{{i.specs}}</li>
+        <li class="list-group-item">{{i.datetime}}</li>
+      </ul>
+      <div class="card-body">
+        <a href="{% url 'em' i.id %}" class="card-link">edit</a>
+        <a href="{% url 'dm' i.id %}" class="card-link">Delete</a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
