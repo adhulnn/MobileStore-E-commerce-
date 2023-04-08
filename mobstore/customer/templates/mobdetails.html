@@ -54,7 +54,8 @@
                         <form method="post">
                           {% csrf_token %}
                           <div class="container text-center">
-                            <button type="submit" class="btn btn-info col-12">Add to Cart</button>
+                          
+                          <a href="{% url 'addcrt' mobile.id %}" class="btn btn-info col-12">Add to Cart <i class="bi bi-cart"></i></a>
                           </div>
                         </form>
                         <div class="container" id="rev">
