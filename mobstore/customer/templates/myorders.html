@@ -46,6 +46,7 @@
                         <tr>
                             <th>Image</th>
                             <th>Name</th>
+                            <th>Quantity</th>
                             <th>Price</th>
                         </tr>
                     </thead>
@@ -54,10 +55,17 @@
                         <tr>
                             <td><img src="{{ mobile.photo.url }}" class="img-fluid" width="100"></td>
                             <td>{{ mobile.brand }} {{ mobile.model }}</td>
+                            <!-- <td>{{ order.quantity }}</td> -->
                             <td>{{ mobile.price|floatformat:2 }}</td>
+                            
                         </tr>
+                        
                         {% endfor %}
                     </tbody>
+                    <!-- <tr>
+                        <td colspan="3"><strong>Total amount</strong></td>
+                        <td id="here"></td>
+                    </tr> -->
                 </table>
             </div>
 
@@ -89,12 +97,11 @@
                                 <form method="POST" action="{% url 'review_product' mobile.id %}">
                                     {% csrf_token %}
                                     <div class="form-group">
-                                        <!-- <label for="id_mobile">Review for </label> -->
-                                        <!-- <select id="id_mobile" name="mobile_id"> -->
+                                      
                                            
                                                 <p value="{{ mobile.id }}"><strong> Review for {{ mobile.brand }} {{ mobile.model }}</strong></p>
                                             
-                                        <!-- </select> -->
+                                    
                                     </div>
                                     <table class="table">
                                         {{ cform.as_table }}
@@ -127,6 +134,6 @@
     {% endif %}
 </div>
 
-  
+
 {% endblock %}
 

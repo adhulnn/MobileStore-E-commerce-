@@ -113,6 +113,8 @@ def checkout(request):
             order.save()
             for item in cart_items:
                 order.mobile.add(item.product)
+                # order.quantity.update(item.quantity)
+                
 
             
             cart_items.delete()

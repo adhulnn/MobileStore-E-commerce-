@@ -20,9 +20,10 @@ body{
   /* background-color: burlywood ; */
 }
 
+
 </style>
 
-<h1 class="bg-warning">Home - store!></h1>
+<h1 class="bg-warning text-center">STORE - Home</h1>
 
     
 <div class="card-container">
@@ -44,9 +45,38 @@ body{
       </ul>
       <div class="card-body">
         <a href="{% url 'em' i.id %}" class="card-link">edit</a>
-        <a href="{% url 'dm' i.id %}" class="card-link">Delete</a>
+        <a href="{% url 'dm' i.id %}" class="card-link">Delete</a>     
+        <a href="" class="card-link abcd" data-toggle="modal" data-target="#reviewModal{{ i.id }}">Reviews</a>      
       </div>
     </div>
+    <!-- Modal -->
+      <div class="modal fade" id="reviewModal{{ i.id }}" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                    <h5 class="modal-title" id="reviewModalLabel">Reviews</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+              </div>
+              <div class="modal-body">
+                  {% for c in review %}
+                    {% if c.mobile.id == i.id %}
+                      <p><b>{{c.user.first_name}} {{c.user.last_name}} <small class="text-muted">{{c.createdat}}</small></b></p>
+                      <p>{{c.comment}}</p>
+                      <script>
+                        $(document).ready(function () {
+                          $("#noreview{{ i.id }}").css("display", "none");
+                        })
+                      </script>
+                    {%endif%}
+                  {% endfor %} 
+                  <p id="noreview{{ i.id }}">No Reviews yet.</p>
+
+              </div>
+          </div>
+        </div>
+      </div>
   {% endfor %}
 </div>
 

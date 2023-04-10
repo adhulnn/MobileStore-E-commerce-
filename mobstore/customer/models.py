@@ -27,6 +27,7 @@ class CartItem(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     mobile = models.ManyToManyField(Mobile, blank=True)
+    quantity = models.PositiveIntegerField(default=1)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField()
